@@ -1,0 +1,8 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1749759362" />
+    <testcase name="counter_test" classname="counter_tb" file="/home/veddesh/cocotb-new-version-tool/counter_tb.py" lineno="40" time="0.006282806396484375" sim_time_ns="250.001" ratio_time="39791.29456223437">
+      <failure message="Test failed with RANDOM_SEED=1749759362" />
+    </testcase>
+  </testsuite>
+</testsuites>
