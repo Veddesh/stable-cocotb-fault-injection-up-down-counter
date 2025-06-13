@@ -1,27 +1,19 @@
 TOPLEVEL_LANG = verilog
-VERILOG_SOURCES := $(shell pwd)/counter.v
-TOPLEVEL = counter
-MODULE = counter_tb
+TOPLEVEL = serial_multiplier
+MODULE = serial_multiplier_tb
 SIM = icarus
+VERILOG_SOURCES = $(shell pwd)/serial_multiplier.v
 
-WAVES=1
-YOSYS_JSON := $(shell pwd)/yosys.json
-export YOSYS_JSON
-
-export PYTHONPATH := $(shell pwd):$(PYTHONPATH)
-
-all: yosys run
+all: run
 
 yosys:
-	yosys -p "read_verilog -sv counter.v; proc; opt; write_json yosys.json"
+	yosys -p "read_verilog -sv $(TOPLEVEL).v; prep -top $(TOPLEVEL); write_json yosys.json"
 
 run:
-	$(MAKE) -f $(shell cocotb-config --makefiles)/Makefile.sim \
-		MODULE=$(MODULE) \
-		TOPLEVEL=$(TOPLEVEL) \
-		TOPLEVEL_LANG=$(TOPLEVEL_LANG) \
-		SIM=$(SIM) \
-		VERILOG_SOURCES="$(VERILOG_SOURCES)"
+	COCOTB_REDUCED_LOG_FMT=1 \
+	make -f $(shell cocotb-config --makefiles)/Makefile.sim \
+	    SIM=$(SIM) TOPLEVEL=$(TOPLEVEL) MODULE=$(MODULE) \
+	    TOPLEVEL_LANG=$(TOPLEVEL_LANG) VERILOG_SOURCES="$(VERILOG_SOURCES)"
 
 clean:
-	rm -rf sim_build __pycache__ results.xml *.vcd *.json
+	rm -rf sim_build __pycache__ *.vcd *.fst results.xml yosys.json
