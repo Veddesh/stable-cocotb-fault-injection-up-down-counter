@@ -1,8 +1,8 @@
 TOPLEVEL_LANG = verilog
-TOPLEVEL = serial_multiplier
-MODULE = serial_multiplier_tb
+TOPLEVEL = up_down_counter
+MODULE = up_down_counter_tb
 SIM = icarus
-VERILOG_SOURCES = $(shell pwd)/serial_multiplier.v
+VERILOG_SOURCES = $(shell pwd)/up_down_counter.v
 
 all: run
 
